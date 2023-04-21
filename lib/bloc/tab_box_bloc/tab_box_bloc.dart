@@ -6,8 +6,10 @@ class TabBoxBloc extends Bloc<TabBoxEvent, TabBoxState> {
   TabBoxBloc() : super(TabBoxSelected(0)) {
     on<TabChanged>(changeIndex);
   }
+  int activePageindex = 0;
 
   changeIndex(TabChanged event, emit) {
+    activePageindex = event.tabIndex;
     emit(TabBoxSelected(event.tabIndex));
   }
 }
