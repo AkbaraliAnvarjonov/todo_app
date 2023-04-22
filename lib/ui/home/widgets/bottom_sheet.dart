@@ -142,7 +142,7 @@ class _AppBottomSheetState extends State<AppBottomSheet> {
                         taskday = await showDatePicker(
                           context: context,
                           initialDate: DateTime.now(),
-                          firstDate: DateTime(2015, 8),
+                          firstDate: DateTime.now(),
                           lastDate: DateTime(2051),
                         );
 

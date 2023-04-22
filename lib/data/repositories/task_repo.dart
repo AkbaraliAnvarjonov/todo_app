@@ -10,7 +10,7 @@ class TaskRepository {
   }
 
   addTask(TaskModel task) {
-    task.id = _box.values.length;
+    task.id = _box.values.length+1;
 
     _box.put(task.id, task);
   }

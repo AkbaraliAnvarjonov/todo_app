@@ -9,6 +9,7 @@ import 'package:todo_app/ui/home/widgets/custom_appbar.dart';
 import 'package:todo_app/utils/constants/app_colors.dart';
 import 'package:todo_app/utils/constants/task_types.dart';
 import 'package:todo_app/utils/constants/text_style.dart';
+import 'package:todo_app/utils/my_utils.dart';
 
 class GridPage extends StatelessWidget {
   const GridPage({super.key});
@@ -21,10 +22,27 @@ class GridPage extends StatelessWidget {
         child: BlocBuilder<GetTaskBloc, GetTaskState>(
           builder: (context, state) {
             if (state is GetTaskSucces) {
+              Map<DateTime, List<TaskModel>> daysMap = {};
+              //sort list
+              daysMap = MyUtils.sortDate(tasks: state.tasks, daysMap: daysMap);
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CustomAppBar(),
+                  CustomAppBar(
+                    tasks: daysMap.isEmpty
+                        ? 0
+                        : daysMap[daysMap.keys.toList()[0]]!.length,
+                    taskModel: state.tasks.isNotEmpty
+                        ? state.tasks[0]
+                        : TaskModel(
+                            title: '',
+                            id: -1,
+                            isFinished: false,
+                            notify: false,
+                            day: DateTime.now(),
+                            type: taskTypes[0],
+                          ),
+                  ),
                   Padding(
                     padding:
                         EdgeInsets.only(left: 18.w, top: 12.h, bottom: 4.h),

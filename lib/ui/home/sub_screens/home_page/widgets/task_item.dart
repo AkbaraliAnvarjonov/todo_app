@@ -65,7 +65,7 @@ class TaskItemWidget extends StatelessWidget {
             color: Colors.grey.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 2,
-            offset: const Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3),
           ),
         ], color: Colors.white, borderRadius: BorderRadius.circular(5.r)),
         child: Row(
@@ -81,6 +81,7 @@ class TaskItemWidget extends StatelessWidget {
                   )),
             ),
             SizedBox(width: 12.w),
+            //is finished
             ZoomTapAnimation(
               onTap: () {
                 task.isFinished = !task.isFinished;
@@ -103,8 +104,9 @@ class TaskItemWidget extends StatelessWidget {
                     ),
             ),
             SizedBox(width: 12.w),
+            //time
             Text(
-              "${DateFormat('HH:mm a').format(task.day)}\n${DateFormat.yMMMd().format(task.day)}",
+              DateFormat('HH:mm a').format(task.day),
               style: TextStyles.medium(
                 fontSize: 11.sp,
                 color: AppColors.textColorGrey2,

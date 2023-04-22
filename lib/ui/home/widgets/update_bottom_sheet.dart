@@ -147,7 +147,7 @@ class _UpdateBottomSheetState extends State<UpdateBottomSheet> {
                         widget.task.day = await showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
-                              firstDate: DateTime(2015, 8),
+                              firstDate: DateTime.now(),
                               lastDate: DateTime(2051),
                             ) ??
                             DateTime.now();
