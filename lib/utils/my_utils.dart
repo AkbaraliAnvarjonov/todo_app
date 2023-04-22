@@ -27,4 +27,9 @@ class MyUtils {
 
     return daysMap;
   }
+
+  static int getDifferenceInSeconds(DateTime dateTime) {
+    Duration difference = dateTime.difference(DateTime.now());
+    return difference.inSeconds;
+  }
 }

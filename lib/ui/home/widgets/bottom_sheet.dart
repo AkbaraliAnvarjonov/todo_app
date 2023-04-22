@@ -197,6 +197,7 @@ class _AppBottomSheetState extends State<AppBottomSheet> {
                           ),
                         ),
                       );
+                      
                       resetControllerValues();
                       Navigator.pop(context);
                     }

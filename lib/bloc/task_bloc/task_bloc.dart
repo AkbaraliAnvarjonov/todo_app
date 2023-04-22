@@ -15,19 +15,23 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     emit(TaskAddLoading());
 
     await locator<TaskRepository>().addTask(event.taskModel);
-
+    locator<TaskRepository>().setNotification(event.taskModel);
     emit(TaskAddSucces());
   }
 
   updateTask(UpdateTaskEvent event, Emitter emit) async {
     await locator<TaskRepository>().updateTask(event.taskModel);
-
+    if (event.taskModel.isFinished == true || event.taskModel.notify == false) {
+      locator<TaskRepository>().cancelNotification(event.taskModel.id);
+    } else {
+      locator<TaskRepository>().setNotification(event.taskModel);
+    }
     emit(TaskUpdateSucces());
   }
 
   deleteTask(DeleteTaskEvent event, Emitter emit) async {
     await locator<TaskRepository>().deleteTasks(event.id);
-
+    locator<TaskRepository>().cancelNotification(event.id);
     emit(TaskDeleteSucces());
   }
 }
