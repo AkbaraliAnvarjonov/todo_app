@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:todo_app/bloc/task_bloc/task_bloc.dart';
 import 'package:todo_app/bloc/task_bloc/task_event.dart';
 import 'package:todo_app/data/models/task_model.dart';
-import 'package:todo_app/ui/widgets/zoom_tap_animation.dart';
 import 'package:todo_app/utils/constants/app_colors.dart';
 import 'package:todo_app/utils/constants/app_icons.dart';
 import 'package:todo_app/utils/constants/app_images.dart';
@@ -24,10 +23,15 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isNotify = false;
+    bool notToday = true;
     if (DateFormat.yMMMd().format(taskModel.day) ==
             DateFormat.yMMMd().format(DateTime.now()) &&
         taskModel.notify) {
       isNotify = true;
+    }
+    if (DateFormat.yMMMd().format(taskModel.day) ==
+        DateFormat.yMMMd().format(DateTime.now())) {
+      notToday = false;
     }
     return Container(
       height: isNotify ? 238.h : 106.h,
@@ -60,7 +64,7 @@ class CustomAppBar extends StatelessWidget {
                   style: TextStyles.medium(color: Colors.white, fontSize: 22),
                 ),
                 Text(
-                  "Today you have ${isNotify ? tasks : 0} tasks",
+                  "Today you have ${notToday ? 0 : tasks} tasks",
                   style: TextStyles.medium(color: Colors.white, fontSize: 18),
                 ),
                 SizedBox(
