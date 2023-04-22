@@ -15,6 +15,10 @@ class GetTaskBloc extends Bloc<GetTaskEvent, GetTaskState> {
 
     List<TaskModel> tasks = locator<TaskRepository>().getTasks();
 
+    //sort tasks
+    tasks.sort(
+      (a, b) => a.day.compareTo(b.day),
+    );
     emit(GetTaskSucces(tasks: tasks));
   }
 }

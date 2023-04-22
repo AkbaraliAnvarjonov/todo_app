@@ -5,7 +5,6 @@ import 'package:todo_app/bloc/task_bloc/task_bloc.dart';
 import 'package:todo_app/bloc/task_bloc/task_event.dart';
 import 'package:todo_app/bloc/task_bloc/task_state.dart';
 import 'package:todo_app/data/models/task_model.dart';
-import 'package:todo_app/data/models/type_model.dart';
 import 'package:todo_app/ui/widgets/global_button.dart';
 import 'package:todo_app/utils/constants/app_colors.dart';
 import 'package:todo_app/utils/constants/task_types.dart';
@@ -14,20 +13,26 @@ import 'package:intl/intl.dart';
 import 'package:todo_app/utils/my_utils.dart';
 
 TextEditingController taskController = TextEditingController();
-TypeModel typeModel = taskTypes[0];
-DateTime? taskday;
 TimeOfDay? taskTime;
 
-class AppBottomSheet extends StatefulWidget {
-  const AppBottomSheet({
+class UpdateBottomSheet extends StatefulWidget {
+  TaskModel task;
+  UpdateBottomSheet({
     super.key,
+    required this.task,
   });
 
   @override
-  State<AppBottomSheet> createState() => _AppBottomSheetState();
+  State<UpdateBottomSheet> createState() => _UpdateBottomSheetState();
 }
 
-class _AppBottomSheetState extends State<AppBottomSheet> {
+class _UpdateBottomSheetState extends State<UpdateBottomSheet> {
+  @override
+  void initState() {
+    taskController.text = widget.task.title;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -84,10 +89,10 @@ class _AppBottomSheetState extends State<AppBottomSheet> {
                 itemBuilder: (context, index) => SizedBox(width: 20.w),
                 separatorBuilder: (context, index) => InkWell(
                   onTap: () {
-                    typeModel = taskTypes[index];
+                    widget.task.type = taskTypes[index];
                     setState(() {});
                   },
-                  child: taskTypes[index] == typeModel
+                  child: widget.task.type.name == taskTypes[index].name
                       ? Container(
                           height: 27.h,
                           decoration: BoxDecoration(
@@ -139,22 +144,23 @@ class _AppBottomSheetState extends State<AppBottomSheet> {
                     width: 100.w,
                     child: GlobalButton(
                       onPressed: () async {
-                        taskday = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2015, 8),
-                          lastDate: DateTime(2051),
-                        );
+                        widget.task.day = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2015, 8),
+                              lastDate: DateTime(2051),
+                            ) ??
+                            DateTime.now();
 
                         taskTime = await showTimePicker(
                           context: context,
                           initialTime: TimeOfDay.now(),
                         );
 
-                        taskday = DateTime(
-                          taskday!.year,
-                          taskday!.month,
-                          taskday!.day,
+                        widget.task.day = DateTime(
+                          widget.task.day.year,
+                          widget.task.day.month,
+                          widget.task.day.day,
                           taskTime!.hour,
                           taskTime!.minute,
                         );
@@ -166,9 +172,7 @@ class _AppBottomSheetState extends State<AppBottomSheet> {
                   ),
                   SizedBox(width: 20.w),
                   Text(
-                    taskday == null
-                        ? "Choose Date and Time"
-                        : "${DateFormat.yMMMd().format(taskday!)} ${DateFormat('HH:mm').format(taskday!)}",
+                    "${DateFormat.yMMMd().format(widget.task.day)} ${DateFormat('HH:mm').format(widget.task.day)}",
                     style:
                         TextStyles.medium(color: AppColors.textColorDarkGrey),
                   ),
@@ -181,27 +185,26 @@ class _AppBottomSheetState extends State<AppBottomSheet> {
                 padding: EdgeInsets.all(20.w),
                 child: GlobalButton(
                   onPressed: () {
-                    if (taskday == null || taskController.text.isEmpty) {
+                    if (taskController.text.isEmpty) {
                       MyUtils.getMyToast(
                           message: "Complete the other sections below as well");
                     } else {
                       BlocProvider.of<TaskBloc>(context).add(
-                        AddTaskEvent(
+                        UpdateTaskEvent(
                           taskModel: TaskModel(
                             title: taskController.text,
-                            id: 0,
-                            isFinished: false,
-                            notify: true,
-                            day: taskday!,
-                            type: typeModel,
+                            id: widget.task.id,
+                            isFinished: widget.task.isFinished,
+                            notify: widget.task.notify,
+                            day: widget.task.day,
+                            type: widget.task.type,
                           ),
                         ),
                       );
-                      resetControllerValues();
                       Navigator.pop(context);
                     }
                   },
-                  label: "Add Task",
+                  label: "Update",
                   colors: AppColors.appBarGradient,
                 ),
               ),
@@ -210,11 +213,5 @@ class _AppBottomSheetState extends State<AppBottomSheet> {
         ),
       ),
     );
-  }
-
-  void resetControllerValues() {
-    taskController.clear();
-    typeModel = taskTypes[0];
-    taskday = null;
   }
 }

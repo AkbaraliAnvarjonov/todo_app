@@ -35,12 +35,15 @@ class OnBoardingPage extends StatelessWidget {
                   color: AppColors.textColor),
             ),
             SizedBox(height: 170.h),
-            GlobalButton(
-                onPressed: () {
-                  Navigator.pushReplacementNamed(context, PageName.tabBox);
-                  locator<SplashRepository>().setLoggedIn();
-                },
-                label: "Get Started")
+            Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 60.w),
+              child: GlobalButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, PageName.tabBox);
+                    locator<SplashRepository>().setLoggedIn();
+                  },
+                  label: "Get Started"),
+            )
           ],
         ),
       ),

@@ -2,11 +2,11 @@ import 'package:todo_app/data/models/type_model.dart';
 
 class TaskModel {
   int id;
-  final String title;
-  final TypeModel type;
-  final DateTime day;
-  final bool isFinished;
-  final bool notify;
+  String title;
+  TypeModel type;
+  DateTime day;
+  bool isFinished;
+  bool notify;
 
   TaskModel({
     required this.title,
