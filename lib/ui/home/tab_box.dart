@@ -66,6 +66,10 @@ class _TabBoxState extends State<TabBox> {
           ),
           bottomNavigationBar: BottomNavigationBar(
             elevation: 0,
+            unselectedIconTheme:
+                const IconThemeData(color: AppColors.tabUnSelectedColor),
+            selectedIconTheme:
+                const IconThemeData(color: AppColors.tabSelectedColor),
             selectedItemColor: AppColors.tabSelectedColor,
             unselectedItemColor: AppColors.tabUnSelectedColor,
             currentIndex: index,
@@ -73,11 +77,21 @@ class _TabBoxState extends State<TabBox> {
             onTap: (value) {
               context.read<TabBoxBloc>().add(TabChanged(tabIndex: value));
             },
-            items: const [
+            items: [
               BottomNavigationBarItem(
-                  icon: Icon(Icons.home_outlined), label: "Home"),
+                  icon: SvgPicture.asset(
+                    AppIcons.homeIcon,
+                    color: index == 0
+                        ? AppColors.tabSelectedColor
+                        : AppColors.tabUnSelectedColor,
+                  ),
+                  label: "Home"),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.task_alt_outlined), label: "Task"),
+                  icon: SvgPicture.asset(AppIcons.gridIcon,
+                      color: index == 1
+                          ? AppColors.tabSelectedColor
+                          : AppColors.tabUnSelectedColor),
+                  label: "Task"),
             ],
           ),
         );

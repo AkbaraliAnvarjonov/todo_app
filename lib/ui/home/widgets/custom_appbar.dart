@@ -42,7 +42,11 @@ class CustomAppBar extends StatelessWidget {
           ),
           Positioned(
             right: 0,
-            child: SvgPicture.asset(AppImages.smallCircle, width: 80.h),
+            child: SvgPicture.asset(
+              AppImages.smallCircle,
+              width: 80.h,
+              height: 80.h,
+            ),
           ),
           Positioned(
             top: 54.h,
@@ -64,18 +68,6 @@ class CustomAppBar extends StatelessWidget {
                 ),
                 Stack(
                   children: [
-                    Positioned(
-                      top: 12.w,
-                      right: 12.w,
-                      child: ZoomTapAnimation(
-                        onTap: () {
-                          taskModel.notify = false;
-                          BlocProvider.of<TaskBloc>(context)
-                              .add(UpdateTaskEvent(taskModel: taskModel));
-                        },
-                        child: SvgPicture.asset(AppIcons.closeIcon, width: 10.w, height: 10.w,),
-                      ),
-                    ),
                     isNotify
                         ? Container(
                             height: 104.h,
@@ -115,6 +107,22 @@ class CustomAppBar extends StatelessWidget {
                             ),
                           )
                         : const SizedBox(),
+                    Positioned(
+                      top: 0.w,
+                      right: 0.w,
+                      child: IconButton(
+                        onPressed: () {
+                          taskModel.notify = false;
+                          BlocProvider.of<TaskBloc>(context)
+                              .add(UpdateTaskEvent(taskModel: taskModel));
+                        },
+                        icon: SvgPicture.asset(
+                          AppIcons.closeIcon,
+                          width: 12.w,
+                          height: 12.w,
+                        ),
+                      ),
+                    ),
                   ],
                 )
               ],

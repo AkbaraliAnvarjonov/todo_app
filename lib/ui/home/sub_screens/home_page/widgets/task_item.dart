@@ -30,7 +30,7 @@ class TaskItemWidget extends StatelessWidget {
       enabled: true,
       closeOnScroll: true,
       endActionPane: ActionPane(
-        extentRatio: 0.28,
+        extentRatio: 0.32,
         motion: const BehindMotion(),
         children: [
           IconItemWidget(

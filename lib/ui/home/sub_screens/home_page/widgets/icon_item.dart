@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo_app/ui/widgets/zoom_tap_animation.dart';
+import 'package:todo_app/utils/constants/app_colors.dart';
+import 'package:todo_app/utils/constants/app_icons.dart';
 
 class IconItemWidget extends StatelessWidget {
   String icon;
@@ -16,15 +18,20 @@ class IconItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ZoomTapAnimation(
       onTap: onTap,
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 6.w),
-        width: 35.w,
-        height: 35.w,
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-        ),
-        child: Center(
-          child: SvgPicture.asset(icon),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 6.w),
+        child: CircleAvatar(
+          radius: 20.r,
+          backgroundColor: icon == AppIcons.penIcon
+              ? AppColors.penIconColor
+              : AppColors.deleteIconColor,
+          child: Center(
+            child: SvgPicture.asset(
+              icon,
+              height: 20.h,
+              width: 20.h,
+            ),
+          ),
         ),
       ),
     );

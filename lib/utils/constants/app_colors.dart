@@ -10,9 +10,8 @@ class AppColors {
   static const tabSelectedColor = Color(0xFF5F87E7);
   static const tabUnSelectedColor = Color(0xFFDADADA);
   static const backGroundColor = Color(0xFFF9FCFF);
-  static const penIconBackColor = Color(0xFFC4CEF5);
-  static const deleteIconBackColor = Color(0xFFFFCFCF);
-  static const deleteIconColor = Color(0xFFFB3636);
+  static const penIconColor = Color(0xFFC4CEF5);
+  static const deleteIconColor = Color(0xFFFFCFCF);
 
   static const buttonGradient = [
     Color(0xFF5DE61A),
