@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:todo_app/data/repositories/splash_repo.dart';
 import 'package:todo_app/data/repositories/task_repo.dart';
